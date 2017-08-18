@@ -1,7 +1,6 @@
-<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
-<!--
+/*
  * JBoss, Home of Professional Open Source.
- * Copyright 2017, Red Hat, Inc., and individual contributors
+ * Copyright 2017, Red Hat Middleware LLC, and individual contributors
  * as indicated by the @author tags. See the copyright.txt file in the
  * distribution for a full listing of individual contributors.
  *
@@ -19,7 +18,34 @@
  * License along with this software; if not, write to the Free
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
--->
-<properties>
-    <entry key="CoreEnvironmentBean.nodeIdentifier">1</entry>
-</properties>
+ */
+
+package io.narayana.lra.cdi.bean;
+
+import io.narayana.lra.annotation.Compensate;
+import io.narayana.lra.annotation.Complete;
+import io.narayana.lra.annotation.LRA;
+import io.narayana.lra.annotation.Status;
+
+/**
+ *
+ * @author Ondra Chaloupka <ochaloup@redhat.com>
+ */
+@LRA
+public class AllAnnotationsNoPathBean {
+
+    @Complete
+    public void complete() {
+        // no implementation needed
+    }
+    
+    @Compensate
+    public void compensate() {
+        // no implementation needed
+    }
+    
+    @Status
+    public void status() {
+        // no implementation needed
+    }
+}

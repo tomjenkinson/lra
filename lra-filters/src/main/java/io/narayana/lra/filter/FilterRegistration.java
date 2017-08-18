@@ -1,5 +1,4 @@
-<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
-<!--
+/*
  * JBoss, Home of Professional Open Source.
  * Copyright 2017, Red Hat, Inc., and individual contributors
  * as indicated by the @author tags. See the copyright.txt file in the
@@ -19,7 +18,32 @@
  * License along with this software; if not, write to the Free
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
--->
-<properties>
-    <entry key="CoreEnvironmentBean.nodeIdentifier">1</entry>
-</properties>
+ */
+package io.narayana.lra.filter;
+
+import io.narayana.lra.annotation.LRA;
+
+import javax.ws.rs.container.DynamicFeature;
+import javax.ws.rs.container.ResourceInfo;
+import javax.ws.rs.core.FeatureContext;
+import javax.ws.rs.ext.Provider;
+import java.lang.annotation.Annotation;
+import java.lang.reflect.Method;
+
+@Provider
+public class FilterRegistration implements DynamicFeature {
+    private boolean isRegistered;
+
+    @Override
+    public void configure(ResourceInfo resourceInfo, FeatureContext ctx) {
+        if (!isRegistered) {
+            Method method = resourceInfo.getResourceMethod();
+            Annotation transactional = method.getDeclaredAnnotation(LRA.class);
+
+            if (transactional != null || method.getDeclaringClass().getDeclaredAnnotation(LRA.class) != null) {
+                ctx.register(ServerLRAFilter.class);
+                isRegistered = true;
+            }
+        }
+    }
+}

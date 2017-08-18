@@ -1,5 +1,4 @@
-<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
-<!--
+/*
  * JBoss, Home of Professional Open Source.
  * Copyright 2017, Red Hat, Inc., and individual contributors
  * as indicated by the @author tags. See the copyright.txt file in the
@@ -19,7 +18,23 @@
  * License along with this software; if not, write to the Free
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
--->
-<properties>
-    <entry key="CoreEnvironmentBean.nodeIdentifier">1</entry>
-</properties>
+ */
+package io.narayana.lra.client.compensator;
+
+import io.narayana.lra.annotation.CompensatorStatus;
+
+import javax.ws.rs.NotFoundException;
+
+/**
+ * The API for notifying compensators that an LRA is completing or cancelling
+ */
+public interface Compensator {
+    void completeWork(String lraId) throws NotFoundException;
+
+    void compensateWork(String lraId) throws NotFoundException;
+
+    CompensatorStatus status(String lraId) throws NotFoundException;
+
+    void forget(String lraId) throws NotFoundException;
+}
+

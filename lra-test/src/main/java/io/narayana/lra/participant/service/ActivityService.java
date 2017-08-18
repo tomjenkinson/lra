@@ -1,5 +1,4 @@
-<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
-<!--
+/*
  * JBoss, Home of Professional Open Source.
  * Copyright 2017, Red Hat, Inc., and individual contributors
  * as indicated by the @author tags. See the copyright.txt file in the
@@ -19,7 +18,39 @@
  * License along with this software; if not, write to the Free
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
--->
-<properties>
-    <entry key="CoreEnvironmentBean.nodeIdentifier">1</entry>
-</properties>
+ */
+package io.narayana.lra.participant.service;
+
+import io.narayana.lra.participant.model.Activity;
+
+import javax.enterprise.context.ApplicationScoped;
+import javax.ws.rs.NotFoundException;
+import javax.ws.rs.core.Response;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+@ApplicationScoped
+public class ActivityService {
+    private Map<String, Activity> activities = new HashMap<>();
+
+    public Activity getActivity(String txId) throws NotFoundException {
+        if (!activities.containsKey(txId))
+            throw new NotFoundException(Response.status(404).entity("Invalid activity id: " + txId).build());
+
+        return activities.get(txId);
+    }
+
+    public List<Activity> findAll() {
+        return new ArrayList<>(activities.values());
+    }
+
+    public void add(Activity activity) {
+        activities.putIfAbsent(activity.id, activity);
+    }
+
+    public void remove(String id) {
+        activities.remove(id);
+    }
+}

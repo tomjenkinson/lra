@@ -1,5 +1,4 @@
-<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
-<!--
+/*
  * JBoss, Home of Professional Open Source.
  * Copyright 2017, Red Hat, Inc., and individual contributors
  * as indicated by the @author tags. See the copyright.txt file in the
@@ -19,7 +18,23 @@
  * License along with this software; if not, write to the Free
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
--->
-<properties>
-    <entry key="CoreEnvironmentBean.nodeIdentifier">1</entry>
-</properties>
+ */
+package io.narayana.lra.participant.model;
+
+import io.narayana.lra.annotation.CompensatorStatus;
+
+import java.io.Serializable;
+
+public class Activity implements Serializable {
+
+    public String id;
+    public String rcvUrl;
+    public String statusUrl;
+    public CompensatorStatus status;
+    public boolean registered;
+    public String registrationStatus;
+
+    public Activity(String txId) {
+        this.id = txId;
+    }
+}
