@@ -1,0 +1,2 @@
+export BRANCH=main
+export CURRENT_SNAPSHOT_VERSION=0.0.9.Final-SNAPSHOT
