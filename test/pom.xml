@@ -131,11 +131,6 @@
 
       <dependencies>
         <dependency>
-          <groupId>org.jboss.narayana.lra</groupId>
-          <artifactId>lra-coordinator-war</artifactId>
-          <type>war</type>
-        </dependency>
-        <dependency>
           <groupId>org.wildfly.arquillian</groupId>
           <artifactId>wildfly-arquillian-container-managed</artifactId>
           <scope>test</scope>
