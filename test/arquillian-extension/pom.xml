@@ -8,7 +8,7 @@
   <parent>
     <groupId>org.jboss.narayana.lra</groupId>
     <artifactId>lra-test</artifactId>
-    <version>0.0.9.Final</version>
+    <version>1.0.0.Final-SNAPSHOT</version>
   </parent>
 
   <artifactId>lra-test-arquillian-extension</artifactId>
