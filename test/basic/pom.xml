@@ -36,6 +36,11 @@
   <dependencies>
     <dependency>
       <groupId>org.jboss.narayana.lra</groupId>
+      <artifactId>lra-coordinator-war</artifactId>
+      <type>war</type>
+    </dependency>
+    <dependency>
+      <groupId>org.jboss.narayana.lra</groupId>
       <artifactId>narayana-lra</artifactId>
     </dependency>
     <dependency>
