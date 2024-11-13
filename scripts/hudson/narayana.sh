@@ -238,7 +238,7 @@ function build_narayana {
 
   echo "Using MAVEN_OPTS: $MAVEN_OPTS"
 
-  ./build.sh -B -Prelease,community$OBJECT_STORE_PROFILE $ORBARG "$@" $NARAYANA_ARGS $IPV6_OPTS $CODE_COVERAGE_ARGS clean install
+  ./build.sh -B -Prelease$OBJECT_STORE_PROFILE $ORBARG "$@" $NARAYANA_ARGS $IPV6_OPTS $CODE_COVERAGE_ARGS clean install
 
   [ $? -eq 0 ] || fatal "narayana build failed"
 
@@ -354,7 +354,7 @@ function lra_tests {
   echo "#0. LRA Test"
   echo "#0. Running LRA tests using $ARQ_PROF profile"
   # Ideally the following target would be test and integration-test but that doesn't seem to shutdown the server each time
-  PRESERVE_WORKING_DIR=true ./build.sh -fae -B -Pcommunity -P$ARQ_PROF $CODE_COVERAGE_ARGS $ENABLE_LRA_TRACE_LOGS -Dlra.test.timeout.factor="${LRA_TEST_TIMEOUT_FACTOR:-1.5}" "$@" install
+  PRESERVE_WORKING_DIR=true ./build.sh -fae -B -P$ARQ_PROF $CODE_COVERAGE_ARGS $ENABLE_LRA_TRACE_LOGS -Dlra.test.timeout.factor="${LRA_TEST_TIMEOUT_FACTOR:-1.5}" "$@" install
   lra_arq=$?
   if [ $lra_arq != 0 ] ; then fatal "LRA Test failed with failures in $ARQ_PROF profile" ; fi
 }
