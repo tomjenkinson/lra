@@ -16,6 +16,14 @@
   <name>LRA crash tests</name>
   <description>LRA integration tests using unmanaged containers to simulate crash scenarios</description>
 
+  <dependencies>
+    <dependency>
+      <groupId>org.jboss.narayana.lra</groupId>
+      <artifactId>lra-test-arquillian-extension</artifactId>
+      <scope>test</scope>
+    </dependency>
+  </dependencies>
+
   <build>
     <plugins>
       <plugin>
@@ -27,13 +35,5 @@
       </plugin>
     </plugins>
   </build>
-
-  <dependencies>
-    <dependency>
-      <groupId>org.jboss.narayana.lra</groupId>
-      <artifactId>lra-test-arquillian-extension</artifactId>
-      <scope>test</scope>
-    </dependency>
-  </dependencies>
 
 </project>
