@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <!--
+   Copyright The Narayana Authors
+   SPDX short identifier: Apache-2.0
+ -->
+
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>org.jboss.narayana.lra</groupId>
+    <artifactId>lra-parent</artifactId>
+    <version>0.0.10.Final-SNAPSHOT</version>
+    <relativePath>../pom.xml</relativePath>
+  </parent>
+
+  <artifactId>code-coverage</artifactId>
+
+  <name>LRA: JaCoCo Documentation</name>
+  <description>LRA: JaCoCo Documentation</description>
+
+  <properties>
+    <maven.deploy.skip>true</maven.deploy.skip>
+  </properties>
+
+  <profiles>
+    <profile>
+      <id>codeCoverage</id>
+      <dependencies>
+        <dependency>
+          <groupId>org.jacoco</groupId>
+          <artifactId>org.jacoco.ant</artifactId>
+          <version>${version.org.jacoco}</version>
+        </dependency>
+      </dependencies>
+
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-deploy-plugin</artifactId>
+            <configuration>
+              <skip>true</skip>
+            </configuration>
+          </plugin>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-antrun-plugin</artifactId>
+            <dependencies>
+              <dependency>
+                <groupId>org.jacoco</groupId>
+                <artifactId>org.jacoco.ant</artifactId>
+                <version>${version.org.jacoco}</version>
+              </dependency>
+            </dependencies>
+            <executions>
+              <execution>
+                <id>prepare-reports</id>
+                <goals>
+                  <goal>run</goal>
+                </goals>
+                <phase>prepare-package</phase>
+                <configuration>
+                  <target>
+                    <typedef resource="org/jacoco/ant/antlib.xml"></typedef>
+                    <echo message="Coverage report"></echo>
+                    <report>
+                      <executiondata>
+                        <fileset dir="../coordinator/target/coverage-reports" includes="jacoco-ut.exec"></fileset>
+                        <fileset dir="../test/basic/target/coverage-reports" includes="jacoco-ut.exec"></fileset>
+                        <fileset dir="../test/tck/target/coverage-reports" includes="jacoco-ut.exec"></fileset>
+                        <fileset dir="../test/crash/target/coverage-reports" includes="jacoco-ut.exec"></fileset>
+                      </executiondata>
+
+                      <structure name="JaCoCo">
+                        <group name="coordinator">
+                          <classfiles>
+                            <fileset dir="../coordinator/target/classes" includes="**/*.class"></fileset>
+                          </classfiles>
+                          <sourcefiles>
+                            <fileset dir="../coordinator/src/main/java"></fileset>
+                            <fileset dir="../service-base/src/main/java"></fileset>
+                          </sourcefiles>
+                        </group>
+                      </structure>
+
+                      <html destdir="${project.build.directory}/coverage" footer="Code Coverage Report for JaCoCo ${project.version}" locale="en"></html>
+                      <csv destfile="${project.build.directory}/coverage/coverage.csv"></csv>
+                      <xml destfile="${project.build.directory}/coverage/coverage.xml"></xml>
+                    </report>
+                  </target>
+                </configuration>
+              </execution>
+            </executions>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+  </profiles>
+</project>
