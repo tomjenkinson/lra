@@ -141,10 +141,13 @@ function init_test_options {
     wildfly_minimum_jdk
     [ $NARAYANA_TESTS ] || NARAYANA_TESTS=0	# run the narayana surefire tests
     [ $NARAYANA_BUILD ] || NARAYANA_BUILD=0 # build narayana
-    [ $AS_CLONE ] && [ -z "$WILDFLY_CLONED_REPO" ] || AS_CLONE=0 # git clone the AS repo when WILDFLY_CLONED_REPO is not provided
+    [ $AS_CLONE = 1 ] || [ -z $WILDFLY_CLONED_REPO ] && AS_CLONE=1 # git clone the AS repo when WILDFLY_CLONED_REPO is not provided
     [ $AS_BUILD ] || AS_BUILD=0 # build the AS
+    [ $AS_BUILD = 1 ] && [ $AS_CLONE = 0 && -z $WILDFLY_CLONED_REPO ] && fatal "No WILDFLY_CLONED_REPO variable"
     [ $AS_TESTS ] || AS_TESTS=0 # Run WildFly/JBoss EAP testsuite
+    [ $AS_TESTS = 1 ] && [ $AS_CLONE = 0 && -z $WILDFLY_CLONED_REPO ] && fatal "No WILDFLY_CLONED_REPO variable"
     [ $LRA_AS_TESTS ] || LRA_AS_TESTS=0 #LRA tests
+    [ $LRA_AS_TESTS = 1 ] && [ $AS_CLONE = 0 && -z $WILDFLY_CLONED_REPO ] && fatal "No WILDFLY_CLONED_REPO variable"
     [ $LRA_TESTS ] || LRA_TESTS=1 # LRA Test
 
     [ $REDUCE_SPACE ] || REDUCE_SPACE=0 # Whether to reduce the space used
@@ -453,6 +456,7 @@ export ANT_OPTS="$ANT_OPTS $IPV6_OPTS"
 
 [ $NARAYANA_BUILD = 1 ] && build_narayana "$@"
 [ $AS_CLONE = 1 ] && clone_as "$@"
+[ $LRA_TESTS = 1 ] && [ $AS_BUILD = 0 ] && [ -z $JBOSS_HOME ] && WILDFLY_VERSION_FROM_JBOSS_AS=`awk '/wildfly-parent/ { while(!/<version>/) {getline;} print; }' ${WILDFLY_CLONED_REPO}/pom.xml | cut -d \< -f 2|cut -d \> -f 2` && export JBOSS_HOME=${WILDFLY_CLONED_REPO}/dist/target/wildfly-${WILDFLY_VERSION_FROM_JBOSS_AS}
 [ $AS_BUILD = 1 ] && build_as "$@"
 [ $AS_TESTS = 1 ] && tests_as "$@"
 [ $LRA_AS_TESTS = 1 ] && lra_as_tests "$@"
