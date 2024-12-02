@@ -69,6 +69,8 @@
         <configuration>
           <redirectTestOutputToFile>${test.logs.to.file}</redirectTestOutputToFile>
           <systemPropertyVariables combine="merge">
+            <jvm.args.debug>${jvm.args.debug}</jvm.args.debug>
+            <lra.coordinator.debug.params>${lra.coordinator.debug.params}</lra.coordinator.debug.params>
             <!-- failsafe test startup logging configuration-->
             <java.util.logging.config.file>src/test/resources/logging.properties</java.util.logging.config.file>
             <!-- host and port where to find the test application -->
@@ -336,7 +338,7 @@
     <profile>
       <id>codeCoverage</id>
       <properties>
-        <server.jvm.args>${jvm.args.other} ${jvm.args.memory} ${jvm.args.debug} ${jvm.args.jacoco} ${jvm.args.modular}</server.jvm.args>
+        <server.jvm.args>${jvm.args.other} ${jvm.args.memory} ${jvm.args.jacoco} ${jvm.args.modular}</server.jvm.args>
       </properties>
     </profile>
     <profile>
