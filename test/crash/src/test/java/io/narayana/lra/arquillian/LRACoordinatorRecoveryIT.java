@@ -83,7 +83,7 @@ public class LRACoordinatorRecoveryIT extends UnmanagedTestBase {
     @BeforeClass
     public static void beforeClass() {
 
-        storeDir = Paths.get(String.format("%s/standalone/data/tx-object-store", System.getenv("JBOSS_HOME")));
+        storeDir = Paths.get(String.format("%s/standalone/data/wfly_lra_objectstore", System.getenv("JBOSS_HOME")));
 
         LRA_COORDINATOR_CONTAINER_QUALIFIER = System.getProperty("arquillian.lra.coordinator.container.qualifier");
         if (LRA_COORDINATOR_CONTAINER_QUALIFIER == null || LRA_COORDINATOR_CONTAINER_QUALIFIER.isEmpty()) {
@@ -100,7 +100,7 @@ public class LRACoordinatorRecoveryIT extends UnmanagedTestBase {
             fail("The System Property \"lra.coordinator.container.qualifier\" is not defined");
         }
 
-        containerDeploymentMap.put(LRA_COORDINATOR_CONTAINER_QUALIFIER, LRA_COORDINATOR_DEPLOYMENT_QUALIFIER);
+        containerDeploymentMap.put(LRA_COORDINATOR_CONTAINER_QUALIFIER, "");
         containerDeploymentMap.put(LRA_PARTICIPANT_CONTAINER_QUALIFIER, LRA_PARTICIPANT_DEPLOYMENT_QUALIFIER);
     }
 

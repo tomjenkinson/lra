@@ -131,11 +131,6 @@
 
       <dependencies>
         <dependency>
-          <groupId>org.jboss.narayana.lra</groupId>
-          <artifactId>lra-coordinator-war</artifactId>
-          <type>war</type>
-        </dependency>
-        <dependency>
           <groupId>org.wildfly.arquillian</groupId>
           <artifactId>wildfly-arquillian-container-managed</artifactId>
           <scope>test</scope>
@@ -192,6 +187,11 @@
                     <!-- We overwrite the config files as the config.to.replace can be different in different modules and without overwrite being the case, then the file will not be written over -->
                     <copy file="${env.JBOSS_HOME}/standalone/configuration/${config.to.replace}" overwrite="true" tofile="${env.JBOSS_HOME}/standalone/configuration/${lra.coordinator.xml.filename}"></copy>
                     <copy file="${env.JBOSS_HOME}/standalone/configuration/${config.to.replace}" overwrite="true" tofile="${env.JBOSS_HOME}/standalone/configuration/${lra.participant.xml.filename}"></copy>
+                    <replace file="${env.JBOSS_HOME}/standalone/configuration/${lra.coordinator.xml.filename}" token="org.wildfly.extension.microprofile.jwt-smallrye" value="org.wildfly.extension.microprofile.jwt-smallrye&quot;/&gt;&#xA;&lt;extension module=&quot;org.wildfly.extension.microprofile.lra-coordinator&quot;/&gt;&#xA;&lt;extension module=&quot;org.wildfly.extension.microprofile.openapi-smallrye"></replace>
+                    <replace file="${env.JBOSS_HOME}/standalone/configuration/${lra.coordinator.xml.filename}" token="subsystem xmlns=&quot;urn:wildfly:microprofile-jwt-smallrye:1.0" value="subsystem xmlns=&quot;urn:wildfly:microprofile-jwt-smallrye:1.0&quot;/&gt;&#xA;&lt;subsystem xmlns=&quot;urn:wildfly:microprofile-lra-coordinator:1.0&quot;/&gt;&#xA;&lt;subsystem xmlns=&quot;urn:wildfly:microprofile-openapi-smallrye:1.0"></replace>
+                    <replace file="${env.JBOSS_HOME}/standalone/configuration/${lra.coordinator.xml.filename}" token="object-store path=&quot;tx-object-store" value="object-store path=&quot;wfly_lra_objectstore"></replace>
+                    <replace file="${env.JBOSS_HOME}/standalone/configuration/${lra.participant.xml.filename}" token="org.wildfly.extension.microprofile.jwt-smallrye" value="org.wildfly.extension.microprofile.jwt-smallrye&quot;/&gt;&#xA;&lt;extension module=&quot;org.wildfly.extension.microprofile.lra-coordinator"></replace>
+                    <replace file="${env.JBOSS_HOME}/standalone/configuration/${lra.participant.xml.filename}" token="subsystem xmlns=&quot;urn:wildfly:microprofile-jwt-smallrye:1.0" value="subsystem xmlns=&quot;urn:wildfly:microprofile-jwt-smallrye:1.0&quot;/&gt;&#xA;&lt;subsystem xmlns=&quot;urn:wildfly:microprofile-lra-coordinator:1.0"></replace>
                   </target>
                 </configuration>
               </execution>
@@ -220,7 +220,6 @@
                 <id>start</id>
                 <goals>
                   <goal>start</goal>
-                  <goal>deploy-artifact</goal>
                 </goals>
                 <phase>pre-integration-test</phase>
                 <configuration>
@@ -228,11 +227,6 @@
                   <jbossHome>${env.JBOSS_HOME}</jbossHome>
                   <serverConfig>${lra.coordinator.xml.filename}</serverConfig>
                   <javaOpts>${server.jvm.args} ${server.jvm.object.store.arg}</javaOpts>
-
-                  <!-- used by deploy-artifact -->
-                  <groupId>org.jboss.narayana.lra</groupId>
-                  <artifactId>lra-coordinator-war</artifactId>
-                  <name>${lra.coordinator.war.name}</name>
                   <force>true</force>
                 </configuration>
               </execution>
@@ -241,13 +235,9 @@
               <execution>
                 <id>undeploy</id>
                 <goals>
-                  <goal>undeploy</goal>
                   <goal>shutdown</goal>
                 </goals>
                 <phase>post-integration-test</phase>
-                <configuration>
-                  <name>lra-coordinator.war</name>
-                </configuration>
               </execution>
             </executions>
           </plugin>
