@@ -63,6 +63,7 @@
                         -Dorg.jboss.byteman.transform.all
                         -javaagent:${project.build.directory}/lib/byteman.jar=listener:true</jvm.args.byteman>
     <jvm.args.debug></jvm.args.debug>
+    <lra.coordinator.debug.params></lra.coordinator.debug.params>
 
     <!-- IP stack configs. -->
     <jvm.args.ip>-Djava.net.preferIPv4Stack=true -Djava.net.preferIPv6Addresses=false</jvm.args.ip>
@@ -84,7 +85,7 @@
 
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
-    <server.jvm.args>${jvm.args.other} ${jvm.args.memory} ${jvm.args.debug} ${jvm.args.modular}</server.jvm.args>
+    <server.jvm.args>${jvm.args.other} ${jvm.args.memory} ${jvm.args.modular}</server.jvm.args>
     <skipITs>true</skipITs>
     <skipMavenDeployMojo>false</skipMavenDeployMojo>
     <skipNexusStagingDeployMojo>true</skipNexusStagingDeployMojo>
