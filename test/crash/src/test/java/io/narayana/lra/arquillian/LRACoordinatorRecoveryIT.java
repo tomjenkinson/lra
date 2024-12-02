@@ -100,7 +100,7 @@ public class LRACoordinatorRecoveryIT extends UnmanagedTestBase {
             fail("The System Property \"lra.coordinator.container.qualifier\" is not defined");
         }
 
-        containerDeploymentMap.put(LRA_COORDINATOR_CONTAINER_QUALIFIER, LRA_COORDINATOR_DEPLOYMENT_QUALIFIER);
+        containerDeploymentMap.put(LRA_COORDINATOR_CONTAINER_QUALIFIER, "");
         containerDeploymentMap.put(LRA_PARTICIPANT_CONTAINER_QUALIFIER, LRA_PARTICIPANT_DEPLOYMENT_QUALIFIER);
     }
 

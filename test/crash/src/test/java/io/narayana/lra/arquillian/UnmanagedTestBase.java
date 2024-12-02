@@ -32,7 +32,9 @@ public abstract class UnmanagedTestBase {
             containerController.start(containerQualifier);
         }
 
-        deployer.deploy(deploymentQualifier);
+        if (!deploymentQualifier.equals("")) {
+            deployer.deploy(deploymentQualifier);
+        }
     }
 
     final void restartContainer(String containerQualifier) {
@@ -53,7 +55,9 @@ public abstract class UnmanagedTestBase {
         if (containerController.isStarted(containerQualifier)) {
             LRALogger.logger.debugf("Stopping container %s", containerQualifier);
 
-            deployer.undeploy(deploymentQualifier);
+            if (!deploymentQualifier.equals("")) {
+                deployer.undeploy(deploymentQualifier);
+            }
 
             containerController.stop(containerQualifier);
         }
