@@ -226,7 +226,7 @@
                   <!-- used by start -->
                   <jbossHome>${env.JBOSS_HOME}</jbossHome>
                   <serverConfig>${lra.coordinator.xml.filename}</serverConfig>
-                  <javaOpts>${server.jvm.args} ${server.jvm.object.store.arg}</javaOpts>
+                  <javaOpts>${server.jvm.args} ${server.jvm.object.store.arg} ${lra.coordinator.debug.params}</javaOpts>
                   <force>true</force>
                 </configuration>
               </execution>
