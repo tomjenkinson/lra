@@ -63,7 +63,6 @@
                         -Dorg.jboss.byteman.transform.all
                         -javaagent:${project.build.directory}/lib/byteman.jar=listener:true</jvm.args.byteman>
     <jvm.args.debug></jvm.args.debug>
-    <lra.coordinator.debug.params></lra.coordinator.debug.params>
 
     <!-- IP stack configs. -->
     <jvm.args.ip>-Djava.net.preferIPv4Stack=true -Djava.net.preferIPv6Addresses=false</jvm.args.ip>
@@ -73,6 +72,7 @@
     <jvm.args.memory>-Xms64m -Xmx1024m</jvm.args.memory>
     <jvm.args.modular></jvm.args.modular>
     <jvm.args.other>-server</jvm.args.other>
+    <lra.coordinator.debug.params></lra.coordinator.debug.params>
 
     <!-- LRA properties-->
     <lra.test.timeout.factor>1.0</lra.test.timeout.factor>
