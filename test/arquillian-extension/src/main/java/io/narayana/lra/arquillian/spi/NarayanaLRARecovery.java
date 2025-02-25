@@ -6,6 +6,10 @@
 package io.narayana.lra.arquillian.spi;
 
 import io.narayana.lra.LRAConstants;
+import jakarta.inject.Inject;
+import org.eclipse.microprofile.lra.tck.participant.nonjaxrs.valid.ValidLRACSParticipant;
+import org.eclipse.microprofile.lra.tck.service.LRAMetricService;
+import org.eclipse.microprofile.lra.tck.service.LRAMetricType;
 import org.eclipse.microprofile.lra.tck.service.spi.LRARecoveryService;
 import org.jboss.logging.Logger;
 
@@ -20,9 +24,20 @@ import static io.narayana.lra.LRAConstants.RECOVERY_COORDINATOR_PATH_NAME;
 public class NarayanaLRARecovery implements LRARecoveryService {
     private static final Logger log = Logger.getLogger(NarayanaLRARecovery.class);
 
+    @Inject
+    private LRAMetricService lraMetricService;
+
     @Override
     public void waitForCallbacks(URI lraId) {
         // no action needed
+        while (lraMetricService.getMetric(LRAMetricType.Compensated, lraId, ValidLRACSParticipant.class) == 0 &&
+                lraMetricService.getMetric(LRAMetricType.Completed, lraId, ValidLRACSParticipant.class) == 0) {
+            try {
+                Thread.currentThread().sleep(1000);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+        }
     }
 
     @Override
