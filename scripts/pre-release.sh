@@ -10,9 +10,14 @@ function fatal {
 #Get the versions, stripping off any '-SNAPSHOT' suffix
 CURRENT=$(echo ${1} | awk -F '-SNAPSHOT' '{ print $1 }')
 NEXT=$(echo ${2} | awk -F '-SNAPSHOT' '{ print $1 }')
+if [ $# == 3 ]; then
+  REPO="$3"
+else
+  REPO="jbosstm/lra"
+fi
 
 if [ "$NEXT" == "" ]; then
-    echo "usage: $0 <current version> <next version>"
+    echo "usage: $0 <current version> <next version> [REPO]"
     exit 1
 fi
 
@@ -44,7 +49,7 @@ echo ""
 echo "=== TAGGING AND UPDATING LRA ==="
 echo ""
 
-git clone git@github.com:jbosstm/lra.git || fatal
+git clone git@github.com:$REPO.git || fatal
 cd lra
 git checkout $BRANCH || fatal
 

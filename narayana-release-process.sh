@@ -6,12 +6,17 @@
 #
 # 2 arguments: `./narayana-release-process.sh CURRENT NEXT`
 
-if [ $# -ne 2 ]; then
-  echo 1>&2 "$0: usage: CURRENT NEXT"
+if [ $# -lt 2 ]; then
+  echo 1>&2 "$0: usage: CURRENT NEXT [REPO]"
   exit 2
 else
   CURRENT=$1
   NEXT=$2
+  if [ $# -gt 2 ]; then
+    REPO="$3"
+  else
+    REPO="jbosstm/lra"
+  fi
 fi
 
 echo "You will need: VPN, credentials for jbosstm host, jira admin, github permissions on all jbosstm/ repo and nexus permissions." 
@@ -61,7 +66,7 @@ then
   fi
   
   echo "Executing pre-release script, this may be interactive so please stand by"
-  (cd ./scripts/ ; ./pre-release.sh $CURRENT $NEXT)
+  (cd ./scripts/ ; ./pre-release.sh $CURRENT $NEXT $REPO)
   echo "This script is only interactive at the very end now, press enter to continue"
   read
   set +e
