@@ -40,7 +40,7 @@ import java.util.logging.Logger;
  */
 @State(Scope.Benchmark)
 @BenchmarkMode({Mode.Throughput, Mode.AverageTime})
-@OutputTimeUnit(TimeUnit.MILLISECONDS)
+@OutputTimeUnit(TimeUnit.SECONDS)
 @Warmup(iterations = 2, time = 5)
 @Measurement(iterations = 3, time = 10)
 @Fork(1)
